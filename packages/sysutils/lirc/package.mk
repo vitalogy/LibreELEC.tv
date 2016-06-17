@@ -40,10 +40,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_path_LIBUSB_CONFIG= /
                            --with-gnu-ld \
                            --without-x"
 
-pre_make_target() {
-  export MAKEFLAGS=-j1
-}
-
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin/pronto2lirc
   rm -rf $INSTALL/usr/bin/lirc-setup
