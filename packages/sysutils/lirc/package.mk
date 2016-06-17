@@ -48,6 +48,7 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/lib/systemd
   rm -rf $INSTALL/lib
   rm -rf $INSTALL/usr/share
+  rm -rf $INSTALL/etc
 
   mkdir -p $INSTALL/etc/lirc
     cp $PKG_DIR/config/lircd.conf.* $INSTALL/etc/lirc
