@@ -1,0 +1,33 @@
+--- a/config_unix.py	2016-08-11 16:39:10.000000000 +0200
++++ b/config_unix.py	2016-08-16 08:23:01.931334547 +0200
+@@ -15,8 +15,8 @@
+ localbase = os.environ.get('LOCALBASE', '')
+ 
+ #these get prefixes with '/usr' and '/usr/local' or the $LOCALBASE
+-origincdirs = ['/include', '/include/SDL', '/include/SDL']
+-origlibdirs = ['/lib','/lib64','/X11R6/lib']
++origincdirs = ['/include', '/include/SDL']
++origlibdirs = ['/lib','/lib64']
+ if 'ORIGLIBDIRS' in os.environ and os.environ['ORIGLIBDIRS'] != "":
+     origlibdirs = os.environ['ORIGLIBDIRS'].split(":")
+ 
+@@ -63,7 +63,7 @@
+                 elif f[:3] == '-Wl':
+                     self.cflags += '-Xlinker ' + f + ' '
+             if self.name == 'SDL':
+-                inc = '-I' + '/usr/X11R6/include'
++                inc = ''
+                 self.cflags = inc + ' ' + self.cflags
+         except:
+             print ('WARNING: "%s" failed!' % command)
+@@ -190,10 +190,6 @@
+ 
+     incdirs = []
+     libdirs = []
+-    incdirs += ["/usr"+d for d in origincdirs]
+-    libdirs += ["/usr"+d for d in origlibdirs]
+-    incdirs += ["/usr/local"+d for d in origincdirs]
+-    libdirs += ["/usr/local"+d for d in origlibdirs]
+     if localbase:
+         incdirs = [localbase+d for d in origincdirs]
+         libdirs = [localbase+d for d in origlibdirs]
