@@ -36,7 +36,7 @@ PKG_CONFIGURE_OPTS_TARGET="
             --disable-audio \
             --enable-video \
             --disable-events \
-            --disable-joystick \
+            --enable-joystick \
             --disable-cdrom \
             --enable-threads \
             --enable-timers \
