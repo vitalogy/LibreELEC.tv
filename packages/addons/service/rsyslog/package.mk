@@ -18,7 +18,7 @@
 
 PKG_NAME="rsyslog"
 PKG_VERSION="8.21.0"
-PKG_REV="100"
+PKG_REV="102"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/rsyslog"
@@ -33,10 +33,11 @@ PKG_AUTORECONF="yes"
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Rsyslog"
 PKG_ADDON_TYPE="xbmc.service"
-PKG_ADDON_REPOVERSION="8.0"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-imfile \
                            --enable-imjournal \
+                           --enable-relp \
+                           --enable-omjournal \
                            ac_cv_func_malloc_0_nonnull=yes \
                            ac_cv_func_realloc_0_nonnull=yes"
 
