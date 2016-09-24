@@ -1,5 +1,5 @@
 ################################################################################
-#      This file is part of LibreELEC - https://LibreELEC.tv
+#      This file is part of LibreELEC - https://libreelec.tv
 #      Copyright (C) 2016 Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
@@ -16,36 +16,39 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="repository.kodinerds"
-PKG_VERSION="8.0"
-PKG_REV="101"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
-PKG_SITE="http://www.kodinerds.net"
-PKG_URL=""
-PKG_DEPENDS_TARGET="toolchain xmlstarlet:host"
+PKG_NAME="intel-ucode"
+PKG_VERSION="20160714"
+PKG_REV="1"
+PKG_ARCH="x86_64"
+PKG_LICENSE="other"
+PKG_SITE="https://downloadcenter.intel.com/search?keyword=linux+microcode"
+PKG_URL="https://downloadmirror.intel.com/26156/eng/microcode-${PKG_VERSION}.tgz"
+PKG_DEPENDS_TARGET="toolchain intel-ucode:host"
 PKG_PRIORITY="optional"
-PKG_SECTION=""
-PKG_SHORTDESC="Kodinerds add-on repository"
-PKG_LONGDESC="Kodinerds add-on repository"
+PKG_SECTION="linux-firmware"
+PKG_SHORTDESC="intel-ucode: Intel CPU microcodes"
+PKG_LONGDESC="intel-ucode: Intel CPU microcodes"
+
+PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_IS_ADDON="yes"
-PKG_ADDON_NAME="Kodinerds Repository"
-PKG_ADDON_TYPE="xbmc.addon.repository"
+unpack() {
+  mkdir -p $ROOT/$PKG_BUILD
+  tar xf $SOURCES/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tgz -C $ROOT/$PKG_BUILD
+}
 
+make_host() {
+  $CC $CFLAGS -o intel-microcode2ucode intel-microcode2ucode.c
+}
+
+makeinstall_host() {
+  cp intel-microcode2ucode $ROOT/$TOOLCHAIN/bin/
+}
 
 make_target() {
-  $SED -e "s|@PKG_VERSION@|$PKG_VERSION|g" \
-       -e "s|@PKG_REV@|$PKG_REV|g" \
-       -i addon.xml
+  intel-microcode2ucode ./microcode.dat
 }
 
 makeinstall_target() {
-  : # nop
-}
-
-addon() {
-  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID
-  cp -R $PKG_BUILD/* $ADDON_BUILD/$PKG_ADDON_ID
+  :
 }

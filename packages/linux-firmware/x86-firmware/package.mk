@@ -1,5 +1,5 @@
 ################################################################################
-#      This file is part of LibreELEC - https://LibreELEC.tv
+#      This file is part of LibreELEC - https://libreelec.tv
 #      Copyright (C) 2016 Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
@@ -16,36 +16,31 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="repository.kodinerds"
-PKG_VERSION="8.0"
-PKG_REV="101"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
-PKG_SITE="http://www.kodinerds.net"
-PKG_URL=""
-PKG_DEPENDS_TARGET="toolchain xmlstarlet:host"
+PKG_NAME="x86-firmware"
+PKG_VERSION="c4c07a8"
+PKG_REV="1"
+PKG_ARCH="x86_64"
+PKG_LICENSE="other"
+PKG_SITE="http://git.kernel.org/cgit/linux/kernel/git/firmware/linux-firmware.git/"
+PKG_URL="http://git.kernel.org/cgit/linux/kernel/git/firmware/linux-firmware.git/snapshot/$PKG_VERSION.tar.xz"
+PKG_SOURCE_DIR="$PKG_VERSION"
+PKG_DEPENDS_TARGET="toolchain"
 PKG_PRIORITY="optional"
-PKG_SECTION=""
-PKG_SHORTDESC="Kodinerds add-on repository"
-PKG_LONGDESC="Kodinerds add-on repository"
+PKG_SECTION="linux-firmware"
+PKG_SHORTDESC="x86-firmware: x86 related firmware"
+PKG_LONGDESC="x86-firmware: x86 related firmware"
+
+PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_IS_ADDON="yes"
-PKG_ADDON_NAME="Kodinerds Repository"
-PKG_ADDON_TYPE="xbmc.addon.repository"
-
+configure_target() {
+  :
+}
 
 make_target() {
-  $SED -e "s|@PKG_VERSION@|$PKG_VERSION|g" \
-       -e "s|@PKG_REV@|$PKG_REV|g" \
-       -i addon.xml
+  :
 }
 
 makeinstall_target() {
-  : # nop
-}
-
-addon() {
-  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID
-  cp -R $PKG_BUILD/* $ADDON_BUILD/$PKG_ADDON_ID
+  :
 }
