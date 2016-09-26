@@ -17,12 +17,13 @@
 ################################################################################
 
 PKG_NAME="pygame"
-PKG_VERSION="70b3f59c75df"
+#PKG_VERSION="70b3f59c75df"
+PKG_VERSION="37612e0"
 #PKG_VERSION="1.9.1"
 PKG_ARCH="any"
 PKG_LICENSE="LGPL-2.1"
 PKG_SITE="http://www.pygame.org"
-PKG_URL="https://bitbucket.org/pygame/pygame/get/${PKG_VERSION}.zip"
+PKG_URL="https://bitbucket.org/pygame/pygame/get/$PKG_VERSION.tar.bz2"
 #PKG_URL="http://www.pygame.org/ftp/pygame-${PKG_VERSION}release.tar.gz"
 PKG_SOURCE_DIR="pygame-pygame-$PKG_VERSION"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host SDL SDL_image SDL_ttf"

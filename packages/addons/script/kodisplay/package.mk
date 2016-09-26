@@ -17,17 +17,17 @@
 ################################################################################
 
 PKG_NAME="kodisplay"
-PKG_VERSION="0.0.1"
+PKG_VERSION="0ec784a"
 PKG_ARCH="arm"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/vitalogy/script.kodisplay"
-PKG_URL="https://github.com/vitalogy/script.kodisplay/archive/master.zip"
+PKG_URL="https://github.com/vitalogy/script.kodisplay/archive/$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="script.kodisplay-master"
-PKG_DEPENDS_TARGET="toolchain pygame"
+PKG_DEPENDS_TARGET="toolchain pygame RPi.GPIO"
 PKG_PRIORITY="optional"
 PKG_SECTION="script"
 PKG_SHORTDESC="kodisplay: "
-PKG_LONGDESC="KoDisplay ${PKG_VERSION} (Kodi Display)"
+PKG_LONGDESC="KoDisplay $PKG_VERSION (Kodi Display)"
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="kodisplay"
@@ -49,23 +49,27 @@ addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/
   cp -PR $PKG_BUILD/* $ADDON_BUILD/$PKG_ADDON_ID/
 
-  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/resources/lib/SDL/
-  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/resources/lib/SDL/
+  # create a temp dir to copy and compress the libs
+  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/temp/
 
   # SDL
-  cp -P $(get_build_dir SDL)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/resources/lib/SDL/
-
+  mkdir $ADDON_BUILD/$PKG_ADDON_ID/temp/SDL/
+  cp -P $(get_build_dir SDL)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/temp/SDL/
   # SDL_ttf
-  cp -P $(get_build_dir SDL_ttf)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/resources/lib/SDL/
-
+  cp -P $(get_build_dir SDL_ttf)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/temp/SDL/
   # SDL_image
-  cp -P $(get_build_dir SDL_image)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/resources/lib/SDL/
+  cp -P $(get_build_dir SDL_image)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/temp/SDL/
 
   # pygame
-  cp -PR $(get_build_dir pygame)/.install_pkg/usr/lib/python*/site-packages/pygame $ADDON_BUILD/$PKG_ADDON_ID/resources/lib/
+  cp -PR $(get_build_dir pygame)/.install_pkg/usr/lib/python*/site-packages/pygame $ADDON_BUILD/$PKG_ADDON_ID/temp/
 
-  cd $ADDON_BUILD/$PKG_ADDON_ID/resources/lib
-  tar -cvzf lib.tgz pygame SDL 1>/dev/null
-  rm -rf SDL pygame
+  # RPi.GPIO
+  mkdir $ADDON_BUILD/$PKG_ADDON_ID/temp/RPi
+  cp -PR $(get_build_dir RPi.GPIO)/build/lib.linux-*/RPi/* $ADDON_BUILD/$PKG_ADDON_ID/temp/RPi/
+
+  cd $ADDON_BUILD/$PKG_ADDON_ID/temp
+  tar -cvzf lib.tgz RPi pygame SDL 1>/dev/null
   cd $ROOT
+  cp $ADDON_BUILD/$PKG_ADDON_ID/temp/lib.tgz $ADDON_BUILD/$PKG_ADDON_ID/resources/lib/
+  rm -rf $ADDON_BUILD/$PKG_ADDON_ID/temp
 }
