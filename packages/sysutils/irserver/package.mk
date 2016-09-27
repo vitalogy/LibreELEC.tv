@@ -24,7 +24,6 @@ PKG_LICENSE="Freeware"
 PKG_SITE="http://http://www.irtrans.de"
 PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
 PKG_SECTION="sysutils/remote"
 PKG_SHORTDESC="irserver: IR Trans transforms your PC into a programmable remote control."
 PKG_LONGDESC="IR Trans transforms your PC into a programmable remote control: It learns the codes of your remote control, stores them in a database and sends them controlled by your applications."
@@ -39,7 +38,7 @@ elif [ "$TARGET_ARCH" = "arm" ]; then
 fi
 
 make_target() {
-  make CC=$TARGET_CC CFLAGS="$CFLAGS" LDFLAGS="$LDFLAGS" $IRSERVER_BIN
+  make CC=$CC CFLAGS="$CFLAGS" LDFLAGS="$LDFLAGS" $IRSERVER_BIN
   $STRIP $IRSERVER_BIN
 }
 
