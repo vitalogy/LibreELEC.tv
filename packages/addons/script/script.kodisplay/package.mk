@@ -16,26 +16,26 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="kodisplay"
+PKG_NAME="script.kodisplay"
 PKG_VERSION="0ec784a"
 PKG_ARCH="arm"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/vitalogy/script.kodisplay"
 PKG_URL="https://github.com/vitalogy/script.kodisplay/archive/$PKG_VERSION.tar.gz"
-PKG_SOURCE_DIR="script.kodisplay-master"
+#PKG_SOURCE_DIR="script.kodisplay-$PKG_VERSION"
 PKG_DEPENDS_TARGET="toolchain pygame RPi.GPIO"
 PKG_PRIORITY="optional"
-PKG_SECTION="script"
+#PKG_SECTION="script"
 PKG_SHORTDESC="kodisplay: "
-PKG_LONGDESC="KoDisplay $PKG_VERSION (Kodi Display)"
+PKG_LONGDESC="KoDisplay (Kodi Display)"
+PKG_AUTORECONF="no"
 
 PKG_IS_ADDON="yes"
-PKG_ADDON_NAME="kodisplay"
+PKG_ADDON_NAME="script.kodisplay"
 PKG_ADDON_TYPE="xbmc.service"
-PKG_ADDON_PROVIDES=""
-PKG_ADDON_REPOVERSION="8.0"
+#PKG_ADDON_PROVIDES=""
+#PKG_ADDON_REPOVERSION="8.0"
 
-PKG_AUTORECONF="no"
 
 make_target() {
   : # nothing to do here
@@ -67,9 +67,10 @@ addon() {
   mkdir $ADDON_BUILD/$PKG_ADDON_ID/temp/RPi
   cp -PR $(get_build_dir RPi.GPIO)/build/lib.linux-*/RPi/* $ADDON_BUILD/$PKG_ADDON_ID/temp/RPi/
 
+  mkdir $ADDON_BUILD/$PKG_ADDON_ID/resources/lib/libreelec
   cd $ADDON_BUILD/$PKG_ADDON_ID/temp
   tar -cvzf lib.tgz RPi pygame SDL 1>/dev/null
   cd $ROOT
-  cp $ADDON_BUILD/$PKG_ADDON_ID/temp/lib.tgz $ADDON_BUILD/$PKG_ADDON_ID/resources/lib/
+  mv $ADDON_BUILD/$PKG_ADDON_ID/temp/lib.tgz $ADDON_BUILD/$PKG_ADDON_ID/resources/lib/libreelec/
   rm -rf $ADDON_BUILD/$PKG_ADDON_ID/temp
 }
