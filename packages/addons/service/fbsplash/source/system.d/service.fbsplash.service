@@ -1,0 +1,10 @@
+[Unit]
+Description=Framebuffer Splash Service
+After=graphical.target
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c "exec sh /storage/.kodi/addons/service.fbsplash/bin/showsplash"
+
+[Install]
+WantedBy=kodi.target

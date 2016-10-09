@@ -23,6 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.meego.com"
 PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_DEPENDS_TARGET="toolchain libpng"
 PKG_DEPENDS_INIT="toolchain gcc:init libpng"
 PKG_SECTION="tools"
 PKG_SHORTDESC="plymouth-lite: Boot splash screen based on Fedora's Plymouth code"
@@ -35,10 +36,20 @@ if [ "$UVESAFB_SUPPORT" = yes ]; then
   PKG_DEPENDS_INIT="$PKG_DEPENDS_INIT v86d:init"
 fi
 
+pre_configure_target() {
+  # plymouth-lite dont support to build in subdirs
+  cd $ROOT/$PKG_BUILD
+    rm -rf .$TARGET_NAME
+}
+
 pre_configure_init() {
   # plymouth-lite dont support to build in subdirs
   cd $ROOT/$PKG_BUILD
     rm -rf .$TARGET_NAME-init
+}
+
+makeinstall_target() {
+  make install DESTDIR=$INSTALL
 }
 
 makeinstall_init() {
