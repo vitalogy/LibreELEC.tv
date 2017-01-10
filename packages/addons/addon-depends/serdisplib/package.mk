@@ -38,13 +38,17 @@ PKG_CONFIGURE_OPTS_TARGET="--prefix=$SYSROOT_PREFIX/usr \
                            --with-drivers=all"
 
 pre_configure_target() {
-  # serdisplib fails to build in subdirs (found this in packages/devel/attr/package.mk)
+  # serdisplib fails to build in subdirs
   cd $ROOT/$PKG_BUILD
     rmdir .$TARGET_NAME
+
+  # use libusb-config from sysroot
+  export ac_cv_path_LIBUSB_CONFIG=$SYSROOT_PREFIX/usr/bin/libusb-config
 }
 
 post_make_target() {
-  # copy necessary libs and headers to build the driver glcd from lcdproc
+  # copy necessary libs and headers to build serdisplib support
+  # into the driver glcd from lcdproc
   mkdir -p $SYSROOT_PREFIX/usr/include/serdisplib
   cp include/serdisplib/*.h $SYSROOT_PREFIX/usr/include/serdisplib
   mkdir -p $SYSROOT_PREFIX/usr/lib
