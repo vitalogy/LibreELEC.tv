@@ -33,3 +33,6 @@
 
   # Mali GPU family
     MALI_FAMILY="t720"
+
+  # Additional drivers
+    ADDITIONAL_DRIVERS="${ADDITIONAL_DRIVERS} RTL8822BS"
